@@ -3,11 +3,12 @@ server:
 
 integration:
   auth0:
-    url: https://dev-hhahrzni3t6tv1sl.eu.auth0.com
-    client_id: OUY0n9LwFEFiLuqnwk1ixkVIAlRdK1IS
-    client_secret: qHdp8sFqsst7g4G-tlDLoaeCPQI0t7sl28eLof3qEuF91SxMjM1XUc5_DlCHoXYK
+    url: https://<domain>
+    client_id: <client_id>
+    client_secret: <client_secret>
   keycloak:
-    url: http://localhost:8180/realms/quickstart/protocol/openid-connect
+    realm: quickstart
+    url: http://localhost:8180/realms/${realm}/protocol/openid-connect
     client_id: webapp-client
     client_secret:
 
