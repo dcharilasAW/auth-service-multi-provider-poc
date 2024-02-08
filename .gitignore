@@ -25,3 +25,4 @@ replay_pid*
 /auth-service/.gradle/
 /resource-server/.gradle/
 /.idea/
+/auth-service/build/

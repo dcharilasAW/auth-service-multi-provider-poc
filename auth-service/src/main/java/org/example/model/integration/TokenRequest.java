@@ -1,0 +1,26 @@
+package org.example.model.integration;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Builder;
+import lombok.Data;
+
+@Builder
+@Data
+public class TokenRequest {
+
+    @JsonProperty("client_id")
+    private String clientId;
+
+    @JsonProperty("client_id")
+    private String clientSecret;
+
+    @JsonProperty("code")
+    private String code;
+
+    @JsonProperty("redirect_uri")
+    private String redirectUri;
+
+    @Builder.Default
+    @JsonProperty("grant_type")
+    private String grantType = "authorization_code";
+}

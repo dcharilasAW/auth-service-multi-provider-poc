@@ -1,0 +1,29 @@
+server:
+  port: 8090
+
+integration:
+  auth0:
+    url: https://dev-hhahrzni3t6tv1sl.eu.auth0.com
+    client_id: OUY0n9LwFEFiLuqnwk1ixkVIAlRdK1IS
+    client_secret: qHdp8sFqsst7g4G-tlDLoaeCPQI0t7sl28eLof3qEuF91SxMjM1XUc5_DlCHoXYK
+  keycloak:
+    url: http://localhost:8180/realms/quickstart/protocol/openid-connect
+    client_id: webapp-client
+    client_secret:
+
+clients:
+  - name: demo-client-1
+    authorize-url: ${integration.auth0.url}/authorize
+    access-token-url: ${integration.auth0.url}/oauth/token
+    client-id: ${integration.auth0.client_id}
+    client-secret: ${integration.auth0.client_secret}
+    scope: "openid email profile offline_access"
+    redirect_uri: http://localhost:8090/callback
+    audience: http://localhost:8090
+  - name: demo-client-2
+    authorize-url: ${integration.keycloak.url}/auth
+    access-token-url: ${integration.keycloak.url}/token
+    client-id: ${integration.keycloak.client_id}
+    client_secret: ${integration.keycloak.client_secret}
+    scope: "openid email profile"
+    redirect_uri: http://localhost:3000
