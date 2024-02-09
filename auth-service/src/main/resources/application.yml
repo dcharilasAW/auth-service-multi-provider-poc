@@ -8,7 +8,7 @@ integration:
     client_secret: <client_secret>
   keycloak:
     realm: quickstart
-    url: http://localhost:8180/realms/${realm}/protocol/openid-connect
+    url: http://localhost:8180/realms/${integration.keycloak.realm}/protocol/openid-connect
     client_id: webapp-client
     client_secret:
 
