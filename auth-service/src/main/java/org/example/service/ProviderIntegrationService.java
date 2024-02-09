@@ -12,8 +12,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Collections;
 
-import static java.util.Objects.nonNull;
-
 @Service
 public class ProviderIntegrationService {
 
@@ -38,18 +36,26 @@ public class ProviderIntegrationService {
         HttpEntity<MultiValueMap<String,String>> request = new HttpEntity<>(requestBody, headers);
 
         RestTemplate restTemplate = new RestTemplate();
-        TokenResponse result = restTemplate.postForObject(constructUrlWithParams(client), request, TokenResponse.class);
+        TokenResponse result = restTemplate.postForObject(client.getAccessTokenUrl(), request, TokenResponse.class);
         return result;
     }
 
-    private String constructUrlWithParams(ClientsProperties.Client client) {
-        StringBuilder sb = new StringBuilder(client.getAccessTokenUrl());
-        sb.append("?").append("scope=" + client.getScope());
+    public TokenResponse refreshToken(String clientName, String token) {
+        ClientsProperties.Client client = clientsProperties.getClient(clientName);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
-        if (nonNull(client.getAudience())) {
-            sb.append("&").append("audience=" + client.getAudience());
-        }
+        MultiValueMap<String,String> requestBody = new LinkedMultiValueMap();
+        requestBody.put("grant_type", Collections.singletonList("refresh_token"));
+        requestBody.put("refresh_token", Collections.singletonList(token));
+        requestBody.put("client_id", Collections.singletonList(client.getClientId()));
+        requestBody.put("client_secret", Collections.singletonList(client.getClientSecret()));
 
-        return sb.toString();
+        HttpEntity<MultiValueMap<String,String>> request = new HttpEntity<>(requestBody, headers);
+
+        RestTemplate restTemplate = new RestTemplate();
+        TokenResponse result = restTemplate.postForObject(client.getAccessTokenUrl(), request, TokenResponse.class);
+        return result;
     }
+
 }

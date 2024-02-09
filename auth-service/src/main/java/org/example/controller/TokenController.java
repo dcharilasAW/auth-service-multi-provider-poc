@@ -28,6 +28,11 @@ public class TokenController {
         return service.getAccessToken(clientName,getCodeFromCookie(request.getCookies()));
     }
 
+    @PostMapping(path = "/token/refresh", produces = APPLICATION_JSON_VALUE)
+    public TokenResponse refreshToken(HttpServletRequest request, @RequestParam String clientName) {
+        return service.refreshToken(clientName,getCodeFromCookie(request.getCookies()));
+    }
+
     private String getCodeFromCookie(Cookie[] cookies) {
         //TODO throw exception if cookie is not found
         return Arrays.asList(cookies).stream().filter(c -> AUTH_COOKIE_NAME.equals(c.getName())).findFirst().get().getValue();
