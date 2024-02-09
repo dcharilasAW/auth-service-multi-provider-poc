@@ -2,6 +2,7 @@ package org.example.conf;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.example.constant.ProviderEnum;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
@@ -44,6 +45,7 @@ public class ClientsProperties {
         private String scope;
         private String audience;
         private String redirectUri;
+        private ProviderEnum provider;
     }
 
 }

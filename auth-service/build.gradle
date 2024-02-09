@@ -15,6 +15,7 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-web"
     implementation "org.springframework.boot:spring-boot-starter-security"
     implementation "org.springframework.security:spring-security-core"
+    implementation "io.jsonwebtoken:jjwt-api:0.12.5"
     implementation "org.json:json:20190722"
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'

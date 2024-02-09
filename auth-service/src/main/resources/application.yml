@@ -14,6 +14,7 @@ integration:
 
 clients:
   - name: demo-client-1
+    provider: AUTH0
     authorize-url: ${integration.auth0.url}/authorize
     access-token-url: ${integration.auth0.url}/oauth/token
     client-id: ${integration.auth0.client_id}
@@ -22,6 +23,7 @@ clients:
     redirect_uri: http://localhost:8090/callback
     audience: http://localhost:8090
   - name: demo-client-2
+    provider: KEYCLOAK
     authorize-url: ${integration.keycloak.url}/auth
     access-token-url: ${integration.keycloak.url}/token
     client-id: ${integration.keycloak.client_id}

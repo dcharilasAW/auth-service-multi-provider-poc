@@ -12,7 +12,7 @@ public class TokenRequest {
     @JsonProperty("client_id")
     private String clientId;
 
-    @JsonProperty("client_id")
+    @JsonProperty("client_secret")
     private String clientSecret;
 
     @JsonProperty("code")
