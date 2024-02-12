@@ -4,7 +4,7 @@ plugins {
     id 'io.spring.dependency-management' version '1.1.3'
 }
 
-group = 'org.example'
+group = 'auth-service-poc'
 version = '1.0-SNAPSHOT'
 
 repositories {
@@ -16,6 +16,13 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     compileOnly 'org.projectlombok:lombok'
+}
+
+bootBuildImage {
+    imageName = "ghcr.io/camelotls/resource-server-poc:${version}"
+    createdDate = "now"
+    environment["BP_JVM_VERSION"] = "17"
+    environment["BP_OCI_TITLE"] = "resource-server"
 }
 
 test {

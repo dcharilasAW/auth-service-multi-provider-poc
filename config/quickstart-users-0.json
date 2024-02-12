@@ -1,0 +1,55 @@
+{
+  "realm" : "quickstart",
+  "users" : [ {
+    "id" : "7e8217e6-cdfd-4e55-806d-e85c1cfce212",
+    "username" : "alice",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "credentials" : [ {
+      "id" : "78c28525-debe-47b4-8341-f6d80d11bd90",
+      "type" : "password",
+      "createdDate" : 1706690786164,
+      "secretData" : "{\"value\":\"tQgNGlxtW8rgaQtwpHl0GJBbaKFF8g4fQfKcit492Ho=\",\"salt\":\"OI/SCnxc8UeNJkAHDAtANA==\",\"additionalParameters\":{}}",
+      "credentialData" : "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\",\"additionalParameters\":{}}"
+    } ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "user" ],
+    "notBefore" : 0,
+    "groups" : [ ]
+  }, {
+    "id" : "93b2c57e-d9ae-47d1-a66f-2e593742031a",
+    "username" : "jdoe",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "credentials" : [ {
+      "id" : "484e4382-55c3-4939-b9df-8d9306963e6a",
+      "type" : "password",
+      "createdDate" : 1706690786193,
+      "secretData" : "{\"value\":\"WecuBuLdTPm7/wk8qfMQQefInEVPgdzkFMrDQqmtLbM=\",\"salt\":\"zPzccHddOsfaEp43krOthw==\",\"additionalParameters\":{}}",
+      "credentialData" : "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\",\"additionalParameters\":{}}"
+    } ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "user", "user_premium" ],
+    "notBefore" : 0,
+    "groups" : [ ]
+  }, {
+    "id" : "43a249da-f0d1-4d63-81cd-1b112f7cc622",
+    "username" : "service-account-authz-servlet",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "serviceAccountClientId" : "authz-servlet",
+    "credentials" : [ ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "clientRoles" : {
+      "authz-servlet" : [ "uma_protection" ]
+    },
+    "notBefore" : 0,
+    "groups" : [ ]
+  } ]
+}
