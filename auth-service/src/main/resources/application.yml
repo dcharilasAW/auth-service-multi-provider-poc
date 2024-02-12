@@ -20,8 +20,9 @@ clients:
     client-id: ${integration.auth0.client_id}
     client-secret: ${integration.auth0.client_secret}
     scope: "openid email profile offline_access"
-    redirect_uri: http://localhost:8090/callback
+    redirect-uri: http://localhost:8090/callback
     audience: http://localhost:8090
+    state-param: http://localhost:8090/callback?param=123
   - name: demo-client-2
     provider: KEYCLOAK
     authorize-url: ${integration.keycloak.url}/auth
@@ -29,4 +30,5 @@ clients:
     client-id: ${integration.keycloak.client_id}
     client_secret: ${integration.keycloak.client_secret}
     scope: "openid email profile"
-    redirect_uri: http://localhost:3000
+    redirect-uri: http://localhost:3000
+    state-param: http://localhost:8090/callback?param=123

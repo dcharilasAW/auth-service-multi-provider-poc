@@ -28,6 +28,7 @@ public class LoginController {
         sb.append("?")
                 .append("redirect_uri=" + client.getRedirectUri()).append("&")
                 .append("scope=" + client.getScope()).append("&")
+                .append("state=" + client.getStateParam()).append("&")
                 .append("client_id=" + client.getClientId()).append("&")
                 .append("response_type=code");
 

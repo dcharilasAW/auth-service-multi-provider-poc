@@ -46,6 +46,7 @@ public class ClientsProperties {
         private String audience;
         private String redirectUri;
         private ProviderEnum provider;
+        private String stateParam;
     }
 
 }
