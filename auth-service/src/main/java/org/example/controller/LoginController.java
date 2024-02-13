@@ -30,6 +30,7 @@ public class LoginController {
                 .append("scope=" + client.getScope()).append("&")
                 .append("state=" + client.getStateParam()).append("&")
                 .append("client_id=" + client.getClientId()).append("&")
+                .append("audience=" + client.getAudience()).append("&")
                 .append("response_type=code");
 
         if (nonNull(client.getAudience())) {
