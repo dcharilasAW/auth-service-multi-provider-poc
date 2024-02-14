@@ -1346,6 +1346,10 @@
     "strictTransportSecurity" : "max-age=31536000; includeSubDomains"
   },
   "smtpServer" : { },
+  "loginTheme" : "demo",
+  "accountTheme" : "",
+  "adminTheme" : "",
+  "emailTheme" : "",
   "eventsEnabled" : false,
   "eventsListeners" : [ "jboss-logging" ],
   "enabledEventTypes" : [ ],
@@ -1396,7 +1400,7 @@
       "subType" : "anonymous",
       "subComponents" : { },
       "config" : {
-        "allowed-protocol-mapper-types" : [ "oidc-sha256-pairwise-sub-mapper", "saml-role-list-mapper", "oidc-usermodel-attribute-mapper", "saml-user-attribute-mapper", "saml-user-property-mapper", "oidc-full-name-mapper", "oidc-address-mapper", "oidc-usermodel-property-mapper" ]
+        "allowed-protocol-mapper-types" : [ "saml-role-list-mapper", "oidc-full-name-mapper", "oidc-sha256-pairwise-sub-mapper", "saml-user-property-mapper", "oidc-address-mapper", "saml-user-attribute-mapper", "oidc-usermodel-property-mapper", "oidc-usermodel-attribute-mapper" ]
       }
     }, {
       "id" : "71e44561-7c00-456a-909b-ab3f4c245316",
@@ -1421,7 +1425,7 @@
       "subType" : "authenticated",
       "subComponents" : { },
       "config" : {
-        "allowed-protocol-mapper-types" : [ "oidc-address-mapper", "oidc-usermodel-property-mapper", "saml-user-attribute-mapper", "oidc-usermodel-attribute-mapper", "saml-role-list-mapper", "oidc-full-name-mapper", "oidc-sha256-pairwise-sub-mapper", "saml-user-property-mapper" ]
+        "allowed-protocol-mapper-types" : [ "saml-user-attribute-mapper", "oidc-usermodel-attribute-mapper", "saml-role-list-mapper", "oidc-address-mapper", "oidc-full-name-mapper", "oidc-sha256-pairwise-sub-mapper", "oidc-usermodel-property-mapper", "saml-user-property-mapper" ]
       }
     } ],
     "org.keycloak.keys.KeyProvider" : [ {

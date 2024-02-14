@@ -15,6 +15,9 @@ Login in Admin console as `admin/admin`.
 Login in app as `alice/alice`.  
 As this user you should have the `GAME_VIEW` role, but not the `GAME_PLAY` one.
 
+You can export Keycloak conf by running the following command in terminal. You can then find the exported files inside the container under the path `/tmp/export`.  
+`docker exec -it auth-service-multi-provider-poc-keycloak-1 /opt/keycloak/bin/kc.sh export --dir /tmp/export`
+
 **Auth Service**  
 Acts as a wrapper for IAM providers, currently supporting Auth0 and Keycloak. Connections details, as well as client configuration can be found in `application.yml`.  
 Supported operations:

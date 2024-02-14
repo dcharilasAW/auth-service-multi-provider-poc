@@ -34,7 +34,8 @@ services:
     ports:
       - 8180:8080
     volumes:
-      - ./config/:/opt/keycloak/data/import:ro
+      - ./keycloak/config/:/opt/keycloak/data/import:ro
+      - ./keycloak/themes/demo:/opt/keycloak/themes/demo
 
   adminer:
     image: adminer
@@ -43,21 +44,21 @@ services:
       - 8050:8080
 
 
-  auth-service:
-    depends_on:
-      - postgres
-      - keycloak
-    image: ghcr.io/camelotls/auth-service-poc:1.0-SNAPSHOT
-    restart: on-failure
-    ports:
-      - 8090:8090
-
-
-  resource-server:
-    depends_on:
-      - postgres
-      - keycloak
-    image: ghcr.io/camelotls/resource-server-poc:1.0-SNAPSHOT
-    restart: on-failure
-    ports:
-      - 8080:8080
+#  auth-service:
+#    depends_on:
+#      - postgres
+#      - keycloak
+#    image: ghcr.io/camelotls/auth-service-poc:1.0-SNAPSHOT
+#    restart: on-failure
+#    ports:
+#      - 8090:8090
+#
+#
+#  resource-server:
+#    depends_on:
+#      - postgres
+#      - keycloak
+#    image: ghcr.io/camelotls/resource-server-poc:1.0-SNAPSHOT
+#    restart: on-failure
+#    ports:
+#      - 8095:8095
