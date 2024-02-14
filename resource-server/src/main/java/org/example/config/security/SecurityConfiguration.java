@@ -90,7 +90,8 @@ public class SecurityConfiguration {
     }*/
 
     @ConditionalOnProperty(prefix = "security", name = "provider", havingValue = "AUTH0")
-    JwtAuthenticationConverter jwtAuthenticationConverterForAuth0() {
+    @Bean
+    public JwtAuthenticationConverter jwtAuthenticationConverterForAuth0() {
         JwtGrantedAuthoritiesConverter converter = new JwtGrantedAuthoritiesConverter();
         converter.setAuthoritiesClaimName("permissions");
         converter.setAuthorityPrefix("");
