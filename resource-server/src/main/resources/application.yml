@@ -12,10 +12,13 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: https://dev-hhahrzni3t6tv1sl.eu.auth0.com/
+          #issuer-uri: https://dev-hhahrzni3t6tv1sl.eu.auth0.com/
           jws-algorithms: RS256
-          jwk-set-uri: https://dev-hhahrzni3t6tv1sl.eu.auth0.com/.well-known/jwks.json
-          audiences: ["http://localhost:8090"]
+          #jwk-set-uri: https://dev-hhahrzni3t6tv1sl.eu.auth0.com/.well-known/jwks.json
+          #audiences: ["http://localhost:8090"]  # needed only for Auth0
+          issuer-uri: http://localhost:8180/realms/quickstart
+          jwk-set-uri: http://localhost:8180/realms/quickstart/protocol/openid-connect/certs
 
 security:
-  authorities-claims: permissions  #'permisssions' for Auth0, 'authorities' for Keycloak
+  provider: KEYCLOAK
+  client-id: webapp-client #needed only for Keycloak

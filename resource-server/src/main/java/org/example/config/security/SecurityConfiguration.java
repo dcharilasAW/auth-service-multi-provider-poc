@@ -1,12 +1,18 @@
 package org.example.config.security;
 
+import com.nimbusds.jose.shaded.gson.internal.LinkedTreeMap;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.convert.converter.Converter;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
@@ -14,50 +20,37 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Configuration
 @EnableMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity
 public class SecurityConfiguration {
 
-    @Value("${security.authorities-claims}")
-    private String authoritiesClaimName;
-
-    //@Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}")
-    //private String issuer;
-
-    //@Value("${spring.security.oauth2.resourceserver.jwt.jwk-set-uri}")
-    //private String jwkSetUri;
-
-    //@Value("${spring.security.oauth2.resourceserver.jwt.jws-algorithms}")
-    //private String jwsAlgorithm;
+    @Value("${security.client-id}")
+    private String clientId;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http
-    ) throws Exception {
-        /*http.oauth2ResourceServer(
-          auth -> auth
-              .opaqueToken(
-                  opaqueTokenConfigurer -> opaqueTokenConfigurer
-                      .introspectionUri("http://localhost:8090/token/introspect")
-                          //TODO add credentials to secure introspect?
-                      .introspectionClientCredentials("demo-client", "demo-secret")
-                      .authenticationConverter(opaqueTokenAuthenticationConverter)
-              )
-        );*/
+    public SecurityFilterChain securityFilterChain(HttpSecurity http,
+                                                   JwtAuthenticationConverter jwtAuthenticationConverter) throws Exception {
+
         http.oauth2ResourceServer(oauth2 -> oauth2
                 .jwt()
                 //.decoder(jwtDecoder())
-                .jwtAuthenticationConverter(jwtAuthenticationConverter())
+                .jwtAuthenticationConverter(jwtAuthenticationConverter)
         );
 
         http.cors(httpSecurityCorsConfigurer -> corsConfigurationSource())
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers(HttpMethod.OPTIONS).permitAll();//allow CORS option calls
-                    auth.anyRequest().authenticated();
-                }
-        );
+                            auth.requestMatchers(HttpMethod.OPTIONS).permitAll();//allow CORS option calls
+                            auth.anyRequest().authenticated();
+                        }
+                );
 
         return http.build();
     }
@@ -96,13 +89,32 @@ public class SecurityConfiguration {
         return jwtDecoder;
     }*/
 
-    JwtAuthenticationConverter jwtAuthenticationConverter() {
+    @ConditionalOnProperty(prefix = "security", name = "provider", havingValue = "AUTH0")
+    JwtAuthenticationConverter jwtAuthenticationConverterForAuth0() {
         JwtGrantedAuthoritiesConverter converter = new JwtGrantedAuthoritiesConverter();
-        converter.setAuthoritiesClaimName(authoritiesClaimName);
+        converter.setAuthoritiesClaimName("permissions");
         converter.setAuthorityPrefix("");
 
         JwtAuthenticationConverter jwtConverter = new JwtAuthenticationConverter();
         jwtConverter.setJwtGrantedAuthoritiesConverter(converter);
         return jwtConverter;
+    }
+
+    @ConditionalOnProperty(prefix = "security", name = "provider", havingValue = "KEYCLOAK")
+    @Bean
+    public JwtAuthenticationConverter jwtAuthenticationConverterForKeycloak() {
+        Converter<Jwt, Collection<GrantedAuthority>> jwtGrantedAuthoritiesConverter = jwt -> {
+            Map<String, Object> resourceAccess = jwt.getClaim("resource_access");
+            Object client = resourceAccess.get(clientId);
+            LinkedTreeMap<String, List<String>> clientRoleMap = (LinkedTreeMap<String, List<String>>) client;
+            List<String> clientRoles = new ArrayList<>(clientRoleMap.get("roles"));
+            return clientRoles.stream()
+                    .map(SimpleGrantedAuthority::new)
+                    .collect(Collectors.toList());
+        };
+
+        JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
+        jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
+        return jwtAuthenticationConverter;
     }
 }
