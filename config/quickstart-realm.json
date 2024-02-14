@@ -260,7 +260,23 @@
         "containerId" : "10ab0590-ce9d-434a-906e-a18f2a2c7db7",
         "attributes" : { }
       } ],
-      "webapp-client" : [ ],
+      "webapp-client" : [ {
+        "id" : "2731563c-ba0e-4706-b469-aa17d889e02c",
+        "name" : "GAME_VIEW",
+        "description" : "",
+        "composite" : false,
+        "clientRole" : true,
+        "containerId" : "fbebfb6a-60b3-4cc0-8421-f725258195eb",
+        "attributes" : { }
+      }, {
+        "id" : "d48100cf-4132-4fdb-b7f0-5665fcea3cba",
+        "name" : "GAME_PLAY",
+        "description" : "",
+        "composite" : false,
+        "clientRole" : true,
+        "containerId" : "fbebfb6a-60b3-4cc0-8421-f725258195eb",
+        "attributes" : { }
+      } ],
       "security-admin-console" : [ ],
       "authz-servlet" : [ {
         "id" : "de3bb2d4-692f-4757-abc7-6a5a40cd0db4",
@@ -796,6 +812,7 @@
     "enabled" : true,
     "alwaysDisplayInConsole" : true,
     "clientAuthenticatorType" : "client-secret",
+    "secret" : "rkC3xaK8MFvmWMdmjREBxF0HKiL45Xsa",
     "redirectUris" : [ "http://127.0.0.1:3000/*", "http://localhost:3000/*" ],
     "webOrigins" : [ "http://127.0.0.1:3000", "http://localhost:3000" ],
     "notBefore" : 0,
@@ -805,12 +822,12 @@
     "implicitFlowEnabled" : false,
     "directAccessGrantsEnabled" : true,
     "serviceAccountsEnabled" : false,
-    "publicClient" : true,
+    "publicClient" : false,
     "frontchannelLogout" : true,
     "protocol" : "openid-connect",
     "attributes" : {
       "oidc.ciba.grant.enabled" : "false",
-      "client.secret.creation.time" : "1706715785",
+      "client.secret.creation.time" : "1707898158",
       "backchannel.logout.session.required" : "true",
       "post.logout.redirect.uris" : "+",
       "display.on.consent.screen" : "false",
@@ -1379,7 +1396,7 @@
       "subType" : "anonymous",
       "subComponents" : { },
       "config" : {
-        "allowed-protocol-mapper-types" : [ "oidc-full-name-mapper", "saml-user-attribute-mapper", "oidc-address-mapper", "oidc-usermodel-attribute-mapper", "saml-role-list-mapper", "oidc-sha256-pairwise-sub-mapper", "oidc-usermodel-property-mapper", "saml-user-property-mapper" ]
+        "allowed-protocol-mapper-types" : [ "oidc-sha256-pairwise-sub-mapper", "saml-role-list-mapper", "oidc-usermodel-attribute-mapper", "saml-user-attribute-mapper", "saml-user-property-mapper", "oidc-full-name-mapper", "oidc-address-mapper", "oidc-usermodel-property-mapper" ]
       }
     }, {
       "id" : "71e44561-7c00-456a-909b-ab3f4c245316",
@@ -1404,7 +1421,7 @@
       "subType" : "authenticated",
       "subComponents" : { },
       "config" : {
-        "allowed-protocol-mapper-types" : [ "saml-role-list-mapper", "saml-user-property-mapper", "oidc-usermodel-property-mapper", "oidc-sha256-pairwise-sub-mapper", "oidc-usermodel-attribute-mapper", "saml-user-attribute-mapper", "oidc-full-name-mapper", "oidc-address-mapper" ]
+        "allowed-protocol-mapper-types" : [ "oidc-address-mapper", "oidc-usermodel-property-mapper", "saml-user-attribute-mapper", "oidc-usermodel-attribute-mapper", "saml-role-list-mapper", "oidc-full-name-mapper", "oidc-sha256-pairwise-sub-mapper", "saml-user-property-mapper" ]
       }
     } ],
     "org.keycloak.keys.KeyProvider" : [ {
@@ -1996,7 +2013,7 @@
     "cibaInterval" : "5",
     "realmReusableOtpCode" : "false"
   },
-  "keycloakVersion" : "23.0.5",
+  "keycloakVersion" : "23.0.6",
   "userManagedAccessAllowed" : false,
   "clientProfiles" : {
     "profiles" : [ ]

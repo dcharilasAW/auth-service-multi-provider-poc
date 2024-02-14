@@ -16,6 +16,9 @@
     "disableableCredentialTypes" : [ ],
     "requiredActions" : [ ],
     "realmRoles" : [ "user" ],
+    "clientRoles" : {
+      "webapp-client" : [ "GAME_VIEW" ]
+    },
     "notBefore" : 0,
     "groups" : [ ]
   }, {
