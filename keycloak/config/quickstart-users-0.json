@@ -9,13 +9,13 @@
     "credentials" : [ {
       "id" : "78c28525-debe-47b4-8341-f6d80d11bd90",
       "type" : "password",
-      "createdDate" : 1706690786164,
-      "secretData" : "{\"value\":\"tQgNGlxtW8rgaQtwpHl0GJBbaKFF8g4fQfKcit492Ho=\",\"salt\":\"OI/SCnxc8UeNJkAHDAtANA==\",\"additionalParameters\":{}}",
+      "createdDate" : 1708432462479,
+      "secretData" : "{\"value\":\"S3+hpEGFDM8dObMAWeinJdMtZog/uDyjID/f1//sOWI=\",\"salt\":\"vVEjuHPjxE0ld64YR33UQQ==\",\"additionalParameters\":{}}",
       "credentialData" : "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\",\"additionalParameters\":{}}"
     } ],
     "disableableCredentialTypes" : [ ],
     "requiredActions" : [ ],
-    "realmRoles" : [ "user" ],
+    "realmRoles" : [ "user", "offline_access" ],
     "clientRoles" : {
       "webapp-client" : [ "GAME_VIEW" ]
     },
@@ -36,7 +36,10 @@
     } ],
     "disableableCredentialTypes" : [ ],
     "requiredActions" : [ ],
-    "realmRoles" : [ "user", "user_premium" ],
+    "realmRoles" : [ "user", "offline_access", "user_premium" ],
+    "clientRoles" : {
+      "webapp-client" : [ "GAME_VIEW", "GAME_PLAY" ]
+    },
     "notBefore" : 0,
     "groups" : [ ]
   }, {
@@ -52,6 +55,28 @@
     "clientRoles" : {
       "authz-servlet" : [ "uma_protection" ]
     },
+    "notBefore" : 0,
+    "groups" : [ ]
+  }, {
+    "id" : "935dec5f-d223-4b8a-8e1b-a27eb09c2cce",
+    "createdTimestamp" : 1708445966232,
+    "username" : "user4@example.com",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "firstName" : "John",
+    "lastName" : "Doe",
+    "email" : "user4@example.com",
+    "credentials" : [ {
+      "id" : "582a5c61-a67b-4c6b-a225-02986314690f",
+      "type" : "password",
+      "createdDate" : 1708507095323,
+      "secretData" : "{\"value\":\"Zr8pCiclpKG8Vo+O12ptoc1XgZ+3TxYbdF8V7wHlRR4=\",\"salt\":\"iV3y+V0b8IwiN0QJe7birw==\",\"additionalParameters\":{}}",
+      "credentialData" : "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\",\"additionalParameters\":{}}"
+    } ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ "UPDATE_PASSWORD" ],
+    "realmRoles" : [ "default-roles-quickstart" ],
     "notBefore" : 0,
     "groups" : [ ]
   } ]
