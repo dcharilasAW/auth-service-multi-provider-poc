@@ -17,7 +17,9 @@
     "requiredActions" : [ ],
     "realmRoles" : [ "user", "offline_access" ],
     "clientRoles" : {
-      "webapp-client" : [ "GAME_VIEW" ]
+      "webapp-client" : [ "GAME_VIEW" ],
+      "impersonation-client" : [ "IWG_GAME" ],
+      "iwg-client" : [ "IWG_GAME" ]
     },
     "notBefore" : 0,
     "groups" : [ ]
@@ -38,7 +40,8 @@
     "requiredActions" : [ ],
     "realmRoles" : [ "user", "offline_access", "user_premium" ],
     "clientRoles" : {
-      "webapp-client" : [ "GAME_VIEW", "GAME_PLAY" ]
+      "webapp-client" : [ "GAME_VIEW", "GAME_PLAY" ],
+      "iwg-client" : [ "IWG_GAME" ]
     },
     "notBefore" : 0,
     "groups" : [ ]
@@ -55,6 +58,20 @@
     "clientRoles" : {
       "authz-servlet" : [ "uma_protection" ]
     },
+    "notBefore" : 0,
+    "groups" : [ ]
+  }, {
+    "id" : "9399a7cf-b768-454d-9a6d-028cc7b3f50a",
+    "createdTimestamp" : 1708949838878,
+    "username" : "service-account-impersonation-client",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "serviceAccountClientId" : "impersonation-client",
+    "credentials" : [ ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "default-roles-quickstart" ],
     "notBefore" : 0,
     "groups" : [ ]
   }, {
