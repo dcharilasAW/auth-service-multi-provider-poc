@@ -12,9 +12,13 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.oauth2.core.DelegatingOAuth2TokenValidator;
+import org.springframework.security.oauth2.core.OAuth2TokenValidator;
+import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.jwt.JwtDecoders;
+import org.springframework.security.oauth2.jwt.JwtValidators;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationProvider;
 import org.springframework.security.oauth2.server.resource.authentication.JwtIssuerAuthenticationManagerResolver;
@@ -39,23 +43,18 @@ import java.util.stream.Collectors;
 public class SecurityConfiguration {
 
     @Autowired
-    private JWTIssuersProps props;
+    private TokenProperties props;
 
     Map<String, AuthenticationManager> authenticationManagers = new HashMap<>();
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http,
-                                                   JwtAuthenticationConverter jwtAuthenticationConverter) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        List<String> propsIssuers = props.getIssuers();
-        propsIssuers.forEach(issuer -> addManager(authenticationManagers, issuer));
-
+        List<TokenProperties.Tenant> propsIssuers = props.getTenants();
+        propsIssuers.forEach(tenant -> addManager(authenticationManagers, tenant));
 
         http.oauth2ResourceServer(oauth2 -> oauth2
                 .authenticationManagerResolver(authenticationManagerResolver())
-                //.jwt()
-                //.decoder(jwtDecoder())
-                //.jwtAuthenticationConverter(jwtAuthenticationConverter)
         );
 
         http.cors(httpSecurityCorsConfigurer -> corsConfigurationSource())
@@ -91,24 +90,23 @@ public class SecurityConfiguration {
         return source;
     }
 
-    public void addManager(Map<String, AuthenticationManager> authenticationManagers, String issuer) {
-        JwtDecoder jwtDecoder = JwtDecoders.fromOidcIssuerLocation(issuer);
-
-        JwtAuthenticationProvider authenticationProvider = new JwtAuthenticationProvider(jwtDecoder);
+    public void addManager(Map<String, AuthenticationManager> authenticationManagers, TokenProperties.Tenant tenant) {
+        //JwtDecoder jwtDecoder = JwtDecoders.fromOidcIssuerLocation(tenant.getIssuer());
+        JwtAuthenticationProvider authenticationProvider = new JwtAuthenticationProvider(jwtDecoder(tenant));
         authenticationProvider.setJwtAuthenticationConverter(jwtAuthenticationConverterForKeycloak());
-        authenticationManagers.put(issuer, authenticationProvider::authenticate);
+        authenticationManagers.put(tenant.getIssuer(), authenticationProvider::authenticate);
     }
 
-    /*JwtDecoder jwtDecoder() {
-        OAuth2TokenValidator<Jwt> withIssuer = JwtValidators.createDefaultWithIssuer(issuer);
+    public JwtDecoder jwtDecoder(TokenProperties.Tenant tenant) {
+        OAuth2TokenValidator<Jwt> withIssuer = JwtValidators.createDefaultWithIssuer(tenant.getIssuer());
         OAuth2TokenValidator<Jwt> validator = new DelegatingOAuth2TokenValidator<>(withIssuer);
         NimbusJwtDecoder jwtDecoder = NimbusJwtDecoder
-                .withJwkSetUri(jwkSetUri)
-                .jwsAlgorithm(SignatureAlgorithm.valueOf(jwsAlgorithm))
+                .withJwkSetUri(tenant.getJwkSetUri())
+                .jwsAlgorithm(SignatureAlgorithm.valueOf(tenant.getJwsAlgorithm()))
                 .build();
         jwtDecoder.setJwtValidator(validator);
         return jwtDecoder;
-    }*/
+    }
 
     @Bean
     public JwtIssuerAuthenticationManagerResolver authenticationManagerResolver() {

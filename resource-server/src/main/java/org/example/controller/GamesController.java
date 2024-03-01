@@ -25,7 +25,7 @@ public class GamesController {
 
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     @PostMapping("/games/admin")
-    public String iwg() {
+    public String admin() {
         SecurityContextHolder.getContext().getAuthentication();
         return "Admin operation";
     }

@@ -7,16 +7,11 @@ logging:
     org.example: DEBUG
     org.springframework.security: trace
 
-spring:
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          jws-algorithms: RS256
-          #issuer-uri: http://localhost:8180/realms/quickstart
-          #jwk-set-uri: http://localhost:8180/realms/quickstart/protocol/openid-connect/certs
-
 security:
-  issuers:
-    - http://localhost:8180/realms/quickstart
-    - http://localhost:8180/realms/operations
+  tenants:
+    - issuer: http://localhost:8180/realms/quickstart
+      jws-algorithm: RS256
+      jwk-set-uri: http://localhost:8180/realms/quickstart/protocol/openid-connect/certs
+    - issuer: http://localhost:8180/realms/operations
+      jws-algorithm: RS256
+      jwk-set-uri: http://localhost:8180/realms/operations/protocol/openid-connect/certs
