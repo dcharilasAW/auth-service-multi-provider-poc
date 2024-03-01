@@ -9,17 +9,24 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class GamesController {
 
-    @PreAuthorize("hasAuthority('GAME_VIEW')")
+    @PreAuthorize("hasAnyAuthority('GAME_VIEW')")
     @GetMapping("/games")
     public String info() {
         SecurityContextHolder.getContext().getAuthentication();
         return "Fantastic games, you click on shiny stuff and win money.";
     }
 
-    @PreAuthorize("hasAuthority('GAME_PLAY')")
+    @PreAuthorize("hasAnyAuthority('GAME_PLAY')")
     @PostMapping("/games/play")
     public String play() {
         SecurityContextHolder.getContext().getAuthentication();
         return "You have won!";
+    }
+
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PostMapping("/games/admin")
+    public String iwg() {
+        SecurityContextHolder.getContext().getAuthentication();
+        return "Admin operation";
     }
 }
