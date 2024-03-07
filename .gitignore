@@ -30,3 +30,5 @@ replay_pid*
 /resource-server/gradle/
 /keycloak-event-listener/.gradle/
 /keycloak-event-listener/build/
+/keycloak-ip-authenticator/build/
+/keycloak-ip-authenticator/.gradle/
