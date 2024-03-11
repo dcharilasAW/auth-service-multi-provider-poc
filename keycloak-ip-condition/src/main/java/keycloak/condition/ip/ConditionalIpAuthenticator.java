@@ -1,5 +1,6 @@
 package keycloak.condition.ip;
 
+import keycloak.condition.ip.dao.LoginEventDao;
 import org.jboss.logging.Logger;
 import org.keycloak.authentication.AuthenticationFlowContext;
 import org.keycloak.authentication.authenticators.conditional.ConditionalAuthenticator;
@@ -7,7 +8,11 @@ import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.RealmModel;
 import org.keycloak.models.UserModel;
 
+import java.util.List;
+
 public class ConditionalIpAuthenticator implements ConditionalAuthenticator {
+
+    private LoginEventDao repository = new LoginEventDao();
 
     public static final ConditionalIpAuthenticator SINGLETON = new ConditionalIpAuthenticator();
     private static final Logger LOG = Logger.getLogger(ConditionalIpAuthenticator.class);
@@ -15,14 +20,13 @@ public class ConditionalIpAuthenticator implements ConditionalAuthenticator {
     @Override
     public boolean matchCondition(AuthenticationFlowContext context) {
         UserModel user = context.getUser();
+        String clientId = context.getEvent().getEvent().getClientId();
         String remoteIPAddress = context.getConnection().getRemoteAddr();
 
-        //AuthenticatorConfigModel authConfig = context.getAuthenticatorConfig();
         if (user != null) {
-            //boolean resultInversion = Boolean.valueOf(authConfig.getConfig().get(ConditionalIpAuthenticatorFactory.COND_IP_INVERSION));
-            boolean shouldAllow = shouldAllowWithoutFlowChange(user, remoteIPAddress);
-            System.out.println("Should allow without flow change: " + shouldAllow);
-            return !shouldAllow /*^ resultInversion*/;
+            boolean shouldAllow = shouldAllowWithoutFlowChange(user.getId(), clientId, remoteIPAddress);
+            LOG.info("Should allow without flow change: " + shouldAllow);
+            return !shouldAllow;
         }
         return false;
     }
@@ -47,9 +51,9 @@ public class ConditionalIpAuthenticator implements ConditionalAuthenticator {
         // Not used
     }
 
-    private boolean shouldAllowWithoutFlowChange(UserModel user, String remoteIPAddress) {
-        //TODO implement logic here
-        return "alice".equals(user.getUsername());
+    private boolean shouldAllowWithoutFlowChange(String userId, String clientId, String remoteIPAddress) {
+        List<String> ips = repository.getUserIps(userId,clientId);
+        return ips.contains(remoteIPAddress);
     }
 
 }

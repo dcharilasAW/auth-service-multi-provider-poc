@@ -21,14 +21,6 @@ public class ConditionalIpAuthenticatorFactory implements ConditionalAuthenticat
     protected static final String COND_IP_INVERSION = "condIpInversion";
 
     private static final List<ProviderConfigProperty> commonConfig = Collections.unmodifiableList(ProviderConfigurationBuilder.create()
-            /*.property().name(COND_IP_EXPRESSION)
-            .label("Required IP Expression")
-            .helpText("IP validation to execute this flow.")
-            .type(ProviderConfigProperty.STRING_TYPE).add()
-            .property().name(COND_IP_INVERSION)
-            .label("Expression Inversion")
-            .helpText("Inverse match result")
-            .type(ProviderConfigProperty.BOOLEAN_TYPE).add()*/
             .build()
     );
 
